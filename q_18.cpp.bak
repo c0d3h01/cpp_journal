@@ -1,0 +1,73 @@
+// Has bug!
+#include <iostream>
+using namespace std;
+
+class matrix {
+    int a[10][10], r, c;
+
+public:
+    matrix(int x = 0, int y = 0) {
+        r = x;
+        c = y;
+    }
+
+    void input() {
+        for (int i = 0; i < r; i++)
+            for (int j = 0; j < c; j++)
+                cin >> a[i][j];
+    }
+
+    void display() {
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++)
+                cout << a[i][j] << " ";
+            cout << endl;
+        }
+    }
+
+    matrix add(matrix m) {
+        matrix rs(r, c);
+        for (int i = 0; i < r; i++)
+            for (int j = 0; j < c; j++)
+                rs.a[i][j] = a[i][j] + m.a[i][j];
+        return rs;
+    }
+
+    matrix mul(matrix m) {
+        matrix rs(r, m.c);
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < m.c; j++) {
+                rs.a[i][j] = 0;
+                for (int k = 0; k < c; k++)
+                    rs.a[i][j] += a[i][k] * m.a[k][j];
+            }
+        }
+        return rs;
+    }
+};
+
+int main() {
+    int r1, c1, r2, c2;
+    cout << "Enter size A: ";
+    cin >> r1 >> c1;
+    cout << "Enter size B: ";
+    cin >> r2 >> c2;
+
+    matrix A(r1, c1), B(r2, c2);
+    cout << "Enter A:\n";
+    A.input();
+    cout << "Enter B:\n";
+    B.input();
+
+    if (r1 == r2 && c1 == c2) {
+        cout << "Add:\n";
+        A.add(B).display();
+    }
+
+    if (c1 == r2) {
+        cout << "Mul:\n";
+        A.mul(B).display();
+    }
+
+    return 0;
+}
